@@ -4,53 +4,36 @@ namespace App\CharacterDatabase;
 
 use SilverStripe\Assets\Image;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\Security\Member;
+use App\Users\UserData;
 use SilverStripe\Security\Permission;
 
 /**
  * Class \App\Database\Experience
  *
- * @property string $VisitTime
- * @property string $Weather
- * @property string $Notes
- * @property string $Score
- * @property int $Podest
- * @property string $Train
- * @property int $Wagon
- * @property int $Row
- * @property int $Seat
- * @property string $Variant
- * @property string $Version
- * @property int $UserID
- * @property int $ExperienceID
- * @method \SilverStripe\Security\Member User()
- * @method \App\ExperienceDatabase\Experience Experience()
- * @method \SilverStripe\ORM\ManyManyList|\SilverStripe\Security\Member[] Friends()
+ * @property string $Title
+ * @property int $ImageID
+ * @method \SilverStripe\Assets\Image Image()
  */
 class CharacterHat extends DataObject
 {
     private static $db = [
         "Title" => "Varchar(255)",
-        "RequiredXP" => "Int",
     ];
 
     private static $has_one = [
-        "ForegroundImage" => Image::class,
-        "BackgroundImage" => Image::class,
+        "Image" => Image::class,
     ];
 
     private static $belongs_many = [
-        "Members" => Member::class,
+        "UserData" => UserData::class,
     ];
 
     private static $summary_fields = [
         "Title" => "Title",
-        "RequiredXP" => "Required XP",
     ];
 
     private static $field_labels = [
         "Title" => "Title",
-        "RequiredXP" => "Required XP",
     ];
 
     private static $default_sort = "ID ASC";

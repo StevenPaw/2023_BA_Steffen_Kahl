@@ -14,7 +14,7 @@ use SilverStripe\Security\Permission;
  * @property int $ImageID
  * @method \SilverStripe\Assets\Image Image()
  */
-class CharacterEyes extends DataObject
+class CharacterHair extends DataObject
 {
     private static $db = [
         "Title" => "Varchar(255)",
@@ -37,12 +37,12 @@ class CharacterEyes extends DataObject
 
     private static $default_sort = "ID ASC";
 
-    private static $table_name = "CharacterEyes";
+    private static $table_name = "CharacterHair";
 
-    private static $singular_name = "Eyes";
-    private static $plural_name = "Eyes";
+    private static $singular_name = "Hair";
+    private static $plural_name = "Hairs";
 
-    private static $url_segment = "character-eyes";
+    private static $url_segment = "character-hairs";
 
     public function getCMSFields()
     {

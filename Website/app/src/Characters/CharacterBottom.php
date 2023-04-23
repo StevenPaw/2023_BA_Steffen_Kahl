@@ -4,7 +4,7 @@ namespace App\CharacterDatabase;
 
 use SilverStripe\Assets\Image;
 use SilverStripe\ORM\DataObject;
-use App\Users\UserData;
+use App\CharacterDatabase\UserData;
 use SilverStripe\Security\Permission;
 
 /**
@@ -14,7 +14,7 @@ use SilverStripe\Security\Permission;
  * @property int $ImageID
  * @method \SilverStripe\Assets\Image Image()
  */
-class CharacterEyes extends DataObject
+class CharacterBottom extends DataObject
 {
     private static $db = [
         "Title" => "Varchar(255)",
@@ -37,12 +37,12 @@ class CharacterEyes extends DataObject
 
     private static $default_sort = "ID ASC";
 
-    private static $table_name = "CharacterEyes";
+    private static $table_name = "CharacterBottom";
 
-    private static $singular_name = "Eyes";
-    private static $plural_name = "Eyes";
+    private static $singular_name = "Bottom";
+    private static $plural_name = "Bottoms";
 
-    private static $url_segment = "character-eyes";
+    private static $url_segment = "character-bottom";
 
     public function getCMSFields()
     {

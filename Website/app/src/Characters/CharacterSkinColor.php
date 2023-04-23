@@ -13,8 +13,9 @@ use SilverStripe\Security\Permission;
  * @property string $Title
  * @property int $ImageID
  * @method \SilverStripe\Assets\Image Image()
+ * @method \SilverStripe\ORM\ManyManyList|\App\Users\UserData[] UserData()
  */
-class CharacterEyes extends DataObject
+class CharacterSkinColor extends DataObject
 {
     private static $db = [
         "Title" => "Varchar(255)",
@@ -24,7 +25,7 @@ class CharacterEyes extends DataObject
         "Image" => Image::class,
     ];
 
-    private static $belongs_many = [
+    private static $belongs_many_many = [
         "UserData" => UserData::class,
     ];
 
@@ -37,12 +38,12 @@ class CharacterEyes extends DataObject
 
     private static $default_sort = "ID ASC";
 
-    private static $table_name = "CharacterEyes";
+    private static $table_name = "CharacterSkinColor";
 
-    private static $singular_name = "Eyes";
-    private static $plural_name = "Eyes";
+    private static $singular_name = "Skin Color";
+    private static $plural_name = "Skin Colors";
 
-    private static $url_segment = "character-eyes";
+    private static $url_segment = "character-skincolors";
 
     public function getCMSFields()
     {
