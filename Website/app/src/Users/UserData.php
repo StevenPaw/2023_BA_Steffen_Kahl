@@ -8,6 +8,7 @@ use App\CharacterDatabase\CharacterHat;
 use App\CharacterDatabase\CharacterTop;
 use App\CharacterDatabase\CharacterEyes;
 use App\CharacterDatabase\CharacterHair;
+use App\CharacterDatabase\CharacterPart;
 use App\CharacterDatabase\CharacterMouth;
 use App\CharacterDatabase\CharacterBottom;
 use App\CharacterDatabase\CharacterSkinColor;
@@ -25,13 +26,7 @@ use App\CharacterDatabase\CharacterSkinColor;
  * @property int $SelectedBottom
  * @property int $SelectedTop
  * @property int $SelectedHat
- * @method \SilverStripe\ORM\ManyManyList|\App\CharacterDatabase\CharacterSkinColor[] SkinColors()
- * @method \SilverStripe\ORM\ManyManyList|\App\CharacterDatabase\CharacterEyes[] Eyes()
- * @method \SilverStripe\ORM\ManyManyList|\App\CharacterDatabase\CharacterMouth[] Mouths()
- * @method \SilverStripe\ORM\ManyManyList|\App\CharacterDatabase\CharacterHair[] Hairs()
- * @method \SilverStripe\ORM\ManyManyList|\App\CharacterDatabase\CharacterBottom[] Bottoms()
- * @method \SilverStripe\ORM\ManyManyList|\App\CharacterDatabase\CharacterTop[] Tops()
- * @method \SilverStripe\ORM\ManyManyList|\App\CharacterDatabase\CharacterHat[] Hats()
+ * @method \SilverStripe\ORM\ManyManyList|\App\CharacterDatabase\CharacterPart[] AquiredCharacterParts()
  */
 class UserData extends DataObject
 {
@@ -49,13 +44,7 @@ class UserData extends DataObject
     ];
 
     private static $many_many = [
-        "SkinColors" => CharacterSkinColor::class,
-        "Eyes" => CharacterEyes::class,
-        "Mouths" => CharacterMouth::class,
-        "Hairs" => CharacterHair::class,
-        "Bottoms" => CharacterBottom::class,
-        "Tops" => CharacterTop::class,
-        "Hats" => CharacterHat::class,
+        "AquiredCharacterParts" => CharacterPart::class,
     ];
 
     private static $summary_fields = [

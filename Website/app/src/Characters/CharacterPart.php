@@ -4,20 +4,22 @@ namespace App\CharacterDatabase;
 
 use SilverStripe\Assets\Image;
 use SilverStripe\ORM\DataObject;
-use App\Users\UserData;
+use App\CharacterDatabase\UserData;
 use SilverStripe\Security\Permission;
 
 /**
  * Class \App\Database\Experience
  *
  * @property string $Title
+ * @property string $Type
  * @property int $ImageID
  * @method \SilverStripe\Assets\Image Image()
  */
-class CharacterMouth extends DataObject
+class CharacterPart extends DataObject
 {
     private static $db = [
         "Title" => "Varchar(255)",
+        "Type" => "Enum('None, SkinColor, Eyes, Mouth, Hair, Bottom, Top, Hat', 'None')",
     ];
 
     private static $has_one = [
@@ -30,19 +32,20 @@ class CharacterMouth extends DataObject
 
     private static $summary_fields = [
         "Title" => "Title",
+        "Type" => "Type",
     ];
 
     private static $field_labels = [
     ];
 
-    private static $default_sort = "ID ASC";
+    private static $default_sort = "Type ASC, ID ASC";
 
-    private static $table_name = "CharacterMouth";
+    private static $table_name = "CharacterPart";
 
-    private static $singular_name = "Mouth";
-    private static $plural_name = "Mouths";
+    private static $singular_name = "Part";
+    private static $plural_name = "Parts";
 
-    private static $url_segment = "character-mouths";
+    private static $url_segment = "character-part";
 
     public function getCMSFields()
     {

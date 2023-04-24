@@ -2,13 +2,7 @@
 namespace App\CharacterDatabase;
 
 use SilverStripe\Admin\ModelAdmin;
-use App\CharacterDatabase\CharacterHat;
-use App\CharacterDatabase\CharacterTop;
-use App\CharacterDatabase\CharacterEyes;
-use App\CharacterDatabase\CharacterHair;
-use App\CharacterDatabase\CharacterMouth;
-use App\CharacterDatabase\CharacterBottom;
-use App\CharacterDatabase\CharacterSkinColor;
+use App\CharacterDatabase\CharacterPart;
 
 /**
  * Class \App\Database\ExperienceAdmin
@@ -17,13 +11,7 @@ use App\CharacterDatabase\CharacterSkinColor;
 class CharacterAdmin extends ModelAdmin
 {
     private static $managed_models = array (
-        CharacterSkinColor::class,
-        CharacterEyes::class,
-        CharacterMouth::class,
-        CharacterHair::class,
-        CharacterBottom::class,
-        CharacterTop::class,
-        CharacterHat::class,
+        CharacterPart::class,
     );
 
     private static $url_segment = "character-parts";
