@@ -66,6 +66,15 @@ class UserData extends DataObject
 
     private static $url_segment = "userdata";
 
+    public function onBeforeWrite()
+    {
+        parent::onBeforeWrite();
+        $aquiredParts = CharacterPart::get()->filter("RequiredXP:LessThanOrEqual", $this->XP);
+        if ($aquiredParts->count() > 0) {
+            $this->AquiredCharacterParts()->addMany($aquiredParts->toArray());
+        }
+    }
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
