@@ -12,6 +12,7 @@ use SilverStripe\Security\Permission;
  *
  * @property string $Title
  * @property string $Type
+ * @property int $RequiredXP
  * @property int $ImageID
  * @method \SilverStripe\Assets\Image Image()
  */
@@ -20,10 +21,15 @@ class CharacterPart extends DataObject
     private static $db = [
         "Title" => "Varchar(255)",
         "Type" => "Enum('None, SkinColor, Eyes, Mouth, Hair, Bottom, Top, Hat', 'None')",
+        "RequiredXP" => "Int",
     ];
 
     private static $has_one = [
         "Image" => Image::class,
+    ];
+
+    private static $owns = [
+        "Image",
     ];
 
     private static $belongs_many = [

@@ -33,7 +33,7 @@ class UserData extends DataObject
     private static $db = [
         "Nickname" => "Varchar(255)",
         "XP" => "Int",
-        "UserKey" => "Varchar(255)",
+        "UserKey" => "Varchar(512)",
         "SelectedSkinColor" => "Int",
         "SelectedEyes" => "Int",
         "SelectedMouth" => "Int",
@@ -48,11 +48,13 @@ class UserData extends DataObject
     ];
 
     private static $summary_fields = [
-        "Title" => "Title",
+        "ID" => "ID",
+        "Nickname" => "Nickname",
+        "XP" => "XP",
     ];
 
     private static $field_labels = [
-        "Title" => "Title",
+        "Nickname" => "Nickname",
     ];
 
     private static $default_sort = "ID ASC";
