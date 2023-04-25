@@ -71,12 +71,14 @@ namespace {
                         unset($data['User']['AquiredCharacterParts'][$part->ID]['Created']);
                     }
                 } else {
-                    $data['Status'] = "ERROR - User not found";
+                    $data['Status'] = "ERROR";
+                    $data['Error'] = "User not found";
                 }
             } else {
                 if ($nickname != null) {
                     if (UserData::get()->filter("Nickname", $nickname)->first()) {
-                        $data['Status'] = "ERROR - Nickname already in use";
+                        $data['Status'] = "ERROR";
+                        $data['Error'] = "Nickname already in use";
                     } else {
                         $user = UserData::create();
                         $user->Nickname = $nickname;
@@ -100,7 +102,8 @@ namespace {
                         }
                     }
                 } else {
-                    $data['Status'] = "ERROR - No nickname or userkey provided";
+                    $data['Status'] = "ERROR";
+                    $data['Error'] = "No nickname or userkey provided";
                 }
             }
 
@@ -117,14 +120,29 @@ namespace {
                 if ($characterPart) {
                     $data['Status'] = "OK";
                     $data['CharacterPart'] = $characterPart->toMap();
+                    $data['CharacterPart']['Image'] = $characterPart->Image()->AbsoluteLink();
+                    unset($data['CharacterPart']['ClassName']);
+                    unset($data['CharacterPart']['ImageID']);
+                    unset($data['CharacterPart']['RecordClassName']);
+                    unset($data['CharacterPart']['Created']);
                 } else {
-                    $data['Status'] = "ERROR - No CharacterPart With This ID Found";
+                    $data['Status'] = "ERROR";
+                    $data['Error'] = "No CharacterPart With This ID Found";
                 }
             } else {
                 $data['Status'] = "OK";
                 $characterParts = CharacterPart::get();
                 $data['Count'] = $characterParts->Count();
-                $data['CharacterParts'] = $characterParts->toNestedArray();
+                //$data['CharacterParts'] = $characterParts->toNestedArray();
+
+                foreach ($characterParts as $part) {
+                    $data['CharacterParts'][$part->ID] = $part->toMap();
+                    $data['CharacterParts'][$part->ID]['Image'] = $part->Image()->AbsoluteLink();
+                    unset($data['CharacterParts'][$part->ID]['ClassName']);
+                    unset($data['CharacterParts'][$part->ID]['ImageID']);
+                    unset($data['CharacterParts'][$part->ID]['RecordClassName']);
+                    unset($data['CharacterParts'][$part->ID]['Created']);
+                }
             }
 
             $this->response->addHeader('Content-Type', 'application/json');
