@@ -58,7 +58,18 @@ namespace {
                 if ($user) {
                     $data['Status'] = "OK";
                     $data['User'] = $user->toMap();
-                    $data['User']['AquiredCharacterParts'] = $user->AquiredCharacterParts()->toNestedArray();
+                    $data['User']["AquiredCharacterParts"]['Count'] = $user->AquiredCharacterParts()->count();
+                    unset($data['User']['ClassName']);
+                    unset($data['User']['RecordClassName']);
+                    unset($data['User']['ID']);
+                    foreach ($user->AquiredCharacterParts() as $part) {
+                        $data['User']['AquiredCharacterParts'][$part->ID] = $part->toMap();
+                        $data['User']['AquiredCharacterParts'][$part->ID]['Image'] = $part->Image()->AbsoluteLink();
+                        unset($data['User']['AquiredCharacterParts'][$part->ID]['ClassName']);
+                        unset($data['User']['AquiredCharacterParts'][$part->ID]['ImageID']);
+                        unset($data['User']['AquiredCharacterParts'][$part->ID]['RecordClassName']);
+                        unset($data['User']['AquiredCharacterParts'][$part->ID]['Created']);
+                    }
                 } else {
                     $data['Status'] = "ERROR - User not found";
                 }
@@ -75,7 +86,18 @@ namespace {
 
                         $data['Status'] = "OK";
                         $data['User'] = $user->toMap();
-                        $data['User']['AquiredCharacterParts'] = $user->AquiredCharacterParts()->toNestedArray();
+                        $data['User']["AquiredCharacterParts"]['Count'] = $user->AquiredCharacterParts()->count();
+                        unset($data['User']['ClassName']);
+                        unset($data['User']['RecordClassName']);
+                        unset($data['User']['ID']);
+                        foreach ($user->AquiredCharacterParts() as $part) {
+                            $data['User']['AquiredCharacterParts'][$part->ID] = $part->toMap();
+                            $data['User']['AquiredCharacterParts'][$part->ID]['Image'] = $part->Image()->AbsoluteLink();
+                            unset($data['User']['AquiredCharacterParts'][$part->ID]['ClassName']);
+                            unset($data['User']['AquiredCharacterParts'][$part->ID]['ImageID']);
+                            unset($data['User']['AquiredCharacterParts'][$part->ID]['RecordClassName']);
+                            unset($data['User']['AquiredCharacterParts'][$part->ID]['Created']);
+                        }
                     }
                 } else {
                     $data['Status'] = "ERROR - No nickname or userkey provided";
