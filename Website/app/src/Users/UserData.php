@@ -3,6 +3,7 @@
 namespace App\Users;
 
 use SilverStripe\ORM\DataObject;
+use SilverStripe\Forms\DropdownField;
 use SilverStripe\Security\Permission;
 use App\CharacterDatabase\CharacterHat;
 use App\CharacterDatabase\CharacterTop;
@@ -19,13 +20,20 @@ use App\CharacterDatabase\CharacterSkinColor;
  * @property string $Nickname
  * @property int $XP
  * @property string $UserKey
- * @property int $SelectedSkinColor
- * @property int $SelectedEyes
- * @property int $SelectedMouth
- * @property int $SelectedHair
- * @property int $SelectedBottom
- * @property int $SelectedTop
- * @property int $SelectedHat
+ * @property int $SelectedEyesID
+ * @property int $SelectedMouthID
+ * @property int $SelectedHairID
+ * @property int $SelectedBottomID
+ * @property int $SelectedTopID
+ * @property int $SelectedHatID
+ * @property int $SelectedSkinColorID
+ * @method \App\CharacterDatabase\CharacterPart SelectedEyes()
+ * @method \App\CharacterDatabase\CharacterPart SelectedMouth()
+ * @method \App\CharacterDatabase\CharacterPart SelectedHair()
+ * @method \App\CharacterDatabase\CharacterPart SelectedBottom()
+ * @method \App\CharacterDatabase\CharacterPart SelectedTop()
+ * @method \App\CharacterDatabase\CharacterPart SelectedHat()
+ * @method \App\CharacterDatabase\CharacterPart SelectedSkinColor()
  * @method \SilverStripe\ORM\ManyManyList|\App\CharacterDatabase\CharacterPart[] AquiredCharacterParts()
  */
 class UserData extends DataObject
@@ -34,13 +42,16 @@ class UserData extends DataObject
         "Nickname" => "Varchar(255)",
         "XP" => "Int",
         "UserKey" => "Varchar(512)",
-        "SelectedSkinColor" => "Int",
-        "SelectedEyes" => "Int",
-        "SelectedMouth" => "Int",
-        "SelectedHair" => "Int",
-        "SelectedBottom" => "Int",
-        "SelectedTop" => "Int",
-        "SelectedHat" => "Int",
+    ];
+
+    private static $has_one = [
+        "SelectedEyes" => CharacterPart::class,
+        "SelectedMouth" => CharacterPart::class,
+        "SelectedHair" => CharacterPart::class,
+        "SelectedBottom" => CharacterPart::class,
+        "SelectedTop" => CharacterPart::class,
+        "SelectedHat" => CharacterPart::class,
+        "SelectedSkinColor" => CharacterPart::class,
     ];
 
     private static $many_many = [
@@ -78,6 +89,35 @@ class UserData extends DataObject
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
+
+        $fields->removeByName("SelectedEyes");
+        $partsmap = CharacterPart::get()->filter('Type', "Eyes")->map('ID', 'Title');
+        $fields->insertAfter('SelectedEyesID', new DropdownField('SelectedEyesID', 'Selected Eyes', $partsmap));
+
+        $fields->removeByName("SelectedMouth");
+        $partsmap = CharacterPart::get()->filter('Type', "Mouth")->map('ID', 'Title');
+        $fields->insertAfter('SelectedMouthID', new DropdownField('SelectedMouthID', 'Selected Mouth', $partsmap));
+
+        $fields->removeByName("SelectedHair");
+        $partsmap = CharacterPart::get()->filter('Type', "Hair")->map('ID', 'Title');
+        $fields->insertAfter('SelectedHairID', new DropdownField('SelectedHairID', 'Selected Hair', $partsmap));
+
+        $fields->removeByName("SelectedBottom");
+        $partsmap = CharacterPart::get()->filter('Type', "Bottom")->map('ID', 'Title');
+        $fields->insertAfter('SelectedBottomID', new DropdownField('SelectedBottomID', 'Selected Bottom', $partsmap));
+
+        $fields->removeByName("SelectedTop");
+        $partsmap = CharacterPart::get()->filter('Type', "Top")->map('ID', 'Title');
+        $fields->insertAfter('SelectedTopID', new DropdownField('SelectedTopID', 'Selected Top', $partsmap));
+
+        $fields->removeByName("SelectedHat");
+        $partsmap = CharacterPart::get()->filter('Type', "Hat")->map('ID', 'Title');
+        $fields->insertAfter('SelectedHatID', new DropdownField('SelectedHatID', 'Selected Hat', $partsmap));
+
+        $fields->removeByName("SelectedSkinColor");
+        $partsmap = CharacterPart::get()->filter('Type', "SkinColor")->map('ID', 'Title');
+        $fields->insertAfter('SelectedSkinColorID', new DropdownField('SelectedSkinColorID', 'Selected SkinColor', $partsmap));
+
         return $fields;
     }
 
