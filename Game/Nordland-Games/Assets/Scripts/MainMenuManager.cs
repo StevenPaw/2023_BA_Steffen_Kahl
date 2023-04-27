@@ -17,9 +17,8 @@ public class MainMenuManager : MonoBehaviour
         xpText.text = webmanager.UserXP + " XP";
     }
 
-    // Update is called once per frame
-    void Update()
+    public void DeleteSaveData()
     {
-        
+        PlayerPrefs.DeleteAll();
     }
 }

@@ -296,4 +296,9 @@ public class WebManager : MonoBehaviour
 
         return null;
     }
+
+    private void OnGUI()
+    {
+        Debug.Log("Fixing bug with buttons...");
+    }
 }

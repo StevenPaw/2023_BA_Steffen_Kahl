@@ -10,7 +10,9 @@ public class CharacterEditorManager : MonoBehaviour
     [SerializeField] private CharacterPartTypes activePartType;
     [SerializeField] private GameObject selectorEntryPrefab;
     [SerializeField] private GameObject selectorEntryContainer;
-    
+
+    public CharacterPartTypes ActivePartType => activePartType;
+
     // Start is called before the first frame update
     void Start()
     {
