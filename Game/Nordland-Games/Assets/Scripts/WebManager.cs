@@ -16,13 +16,15 @@ public class WebManager : MonoBehaviour
     [SerializeField] private GameObject connectionPopup;
     [SerializeField] private GameObject noAccountPopup;
     [SerializeField] private GameObject offlinePopup;
-    private Dictionary<int, CharacterPart> characterParts;
+    [SerializeField] private List<CharacterPart> characterParts;
     [SerializeField] private TMP_Text errorText;
     [SerializeField] private TMP_Text welcomeText;
     [SerializeField] private GameObject gameStartButton;
     [SerializeField] private string apiURL;
     [SerializeField] private JSONNode jsonResult;
     [SerializeField] private GameObject startCanvas;
+    [SerializeField] private bool userLoaded;
+    [SerializeField] private bool partsLoaded;
     
     [Header("UserData")]
     [SerializeField] private string userNickname;
@@ -39,7 +41,7 @@ public class WebManager : MonoBehaviour
     [Header("MenuScene")] 
     [SerializeField] private string menuScene;
 
-    public Dictionary<int, CharacterPart> CharacterParts => characterParts;
+    public List<CharacterPart> CharacterParts => characterParts;
 
     public int SelectedBottom => selectedBottom;
     public int SelectedTop => selectedTop;
@@ -64,7 +66,7 @@ public class WebManager : MonoBehaviour
             DontDestroyOnLoad(this);
         }
 
-        characterParts = new Dictionary<int, CharacterPart>();
+        characterParts = new List<CharacterPart>();
         
         connectionPopup.SetActive(true);
         offlinePopup.SetActive(false);
@@ -150,7 +152,11 @@ public class WebManager : MonoBehaviour
             connectionPopup.SetActive(true);
             noAccountPopup.SetActive(false);
             welcomeText.text = "Willkommen " + userNickname;
-            gameStartButton.SetActive(true);
+            userLoaded = true;
+            if (partsLoaded)
+            {
+                gameStartButton.SetActive(true);
+            }
         }
         else
         {
@@ -214,9 +220,26 @@ public class WebManager : MonoBehaviour
                     newPart.Type = CharacterPartTypes.HAT;
                 }
                 
-                characterParts.Add(newPart.PartID, newPart);
+                characterParts.Add(newPart);
             }
         }
+        
+        partsLoaded = true;
+        if (userLoaded)
+        {
+            gameStartButton.SetActive(true);
+        }
+    }
+
+    public void SetNewBodyParts(int selectedSkinColor, int selectedEyes, int selectedMouth, int selectedHair, int selectedBottom, int selectedTop, int selectedHat)
+    {
+        this.selectedSkinColor = selectedSkinColor;
+        this.selectedEyes = selectedEyes;
+        this.selectedMouth = selectedMouth;
+        this.selectedHair = selectedHair;
+        this.selectedBottom = selectedBottom;
+        this.selectedTop = selectedTop;
+        this.selectedHat = selectedHat;
     }
 
     public void GenerateUser(TMP_InputField sourceField)
@@ -229,5 +252,18 @@ public class WebManager : MonoBehaviour
     {
         SceneManager.LoadScene(menuScene);
         startCanvas.SetActive(false);
+    }
+
+    public CharacterPart GetCharacterPartByID(int partID)
+    {
+        foreach (CharacterPart part in characterParts)
+        {
+            if(part.PartID == partID)
+            {
+                return part;
+            }
+        }
+
+        return null;
     }
 }
