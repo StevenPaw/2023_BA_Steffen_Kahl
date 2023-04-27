@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ee479d8e607c1f04c95245a9c41e02eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b2edd23d1c68ac4f98a780a116062a0, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -257,7 +257,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ee479d8e607c1f04c95245a9c41e02eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b2edd23d1c68ac4f98a780a116062a0, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -988,7 +988,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ee479d8e607c1f04c95245a9c41e02eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b2edd23d1c68ac4f98a780a116062a0, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1235,7 +1235,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ee479d8e607c1f04c95245a9c41e02eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b2edd23d1c68ac4f98a780a116062a0, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1916,7 +1916,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1225290293}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1723131269}
+        m_TargetAssemblyTypeName: CharacterRenderer, Assembly-CSharp
+        m_MethodName: SaveChangedCharacter
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1225290293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2013,7 +2025,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ee479d8e607c1f04c95245a9c41e02eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b2edd23d1c68ac4f98a780a116062a0, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2614,7 +2626,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1649948244}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.5957958
+  m_Size: 0.5961487
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2807,7 +2819,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ee479d8e607c1f04c95245a9c41e02eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b2edd23d1c68ac4f98a780a116062a0, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -3041,7 +3053,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.18844335, g: 0.08018868, b: 0.3207547, a: 1}
+  m_Color: {r: 0.18053435, g: 0.06505874, b: 0.3207547, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3092,6 +3104,7 @@ MonoBehaviour:
   selectedBottom: 0
   selectedTop: 0
   selectedHat: 0
+  sceneToLoadAfterSaving: MainMenu
 --- !u!1 &1725129886
 GameObject:
   m_ObjectHideFlags: 0
@@ -3408,7 +3421,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ee479d8e607c1f04c95245a9c41e02eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b2edd23d1c68ac4f98a780a116062a0, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

@@ -31,7 +31,8 @@ namespace {
         private static $allowed_actions = [
             "token",
             "account",
-            "characterparts"
+            "characterparts",
+            "changecharacter"
         ];
 
         public function index(HTTPRequest $request)
@@ -143,6 +144,48 @@ namespace {
                     unset($data['CharacterParts'][$part->ID]['RecordClassName']);
                     unset($data['CharacterParts'][$part->ID]['Created']);
                 }
+            }
+
+            $this->response->addHeader('Content-Type', 'application/json');
+            $this->response->addHeader('Access-Control-Allow-Origin', '*');
+            return json_encode($data);
+        }
+
+        public function changecharacter(HTTPRequest $request)
+        {
+            $userkey = $request->getVar("UserKey");
+            $characterpartid = $request->getVar("CharacterPartID");
+            $characterparttype = $request->getVar("CharacterPartType");
+
+            if ($userkey && $characterpartid && $characterparttype) {
+                $user = UserData::get()->filter("UserKey", $userkey)->first();
+                $characterpart = CharacterPart::get()->byID($characterpartid);
+
+                if ($characterpart->Type === $characterparttype) {
+                    $data['Status'] = "OK";
+                    if ($characterparttype == "SkinColor") {
+                        $user->SelectedSkinColorID = $characterpartid;
+                    } else if ($characterparttype == "Eyes") {
+                        $user->SelectedEyesID = $characterpartid;
+                    } else if ($characterparttype == "Mouth") {
+                        $user->SelectedMouthID = $characterpartid;
+                    } else if ($characterparttype == "Hair") {
+                        $user->SelectedHairID = $characterpartid;
+                    } else if ($characterparttype == "Bottom") {
+                        $user->SelectedBottomID = $characterpartid;
+                    } else if ($characterparttype == "Top") {
+                        $user->SelectedTopID = $characterpartid;
+                    } else if ($characterparttype == "Hat") {
+                        $user->SelectedHatID = $characterpartid;
+                    }
+                    $user->write();
+                } else {
+                    $data['Status'] = "ERROR";
+                    $data['Error'] = "CharacterPart Type does not match";
+                }
+            } else {
+                $data['Status'] = "ERROR";
+                $data['Error'] = "No UserKey, CharacterPartID or CharacterPartType provided";
             }
 
             $this->response->addHeader('Content-Type', 'application/json');

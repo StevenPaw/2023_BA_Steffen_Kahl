@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NLG;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CharacterRenderer : MonoBehaviour
@@ -22,6 +23,7 @@ public class CharacterRenderer : MonoBehaviour
     [SerializeField] private int selectedBottom;
     [SerializeField] private int selectedTop;
     [SerializeField] private int selectedHat;
+    [SerializeField] private string sceneToLoadAfterSaving;
     
     private WebManager webManager;
     
@@ -118,5 +120,6 @@ public class CharacterRenderer : MonoBehaviour
     public void SaveChangedCharacter()
     {
         webManager.SetNewBodyParts(selectedSkinColor, selectedEyes, selectedMouth, selectedHair, selectedBottom, selectedTop, selectedHat);
+        SceneManager.LoadScene(sceneToLoadAfterSaving);
     }
 }

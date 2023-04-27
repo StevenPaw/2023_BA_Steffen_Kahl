@@ -240,6 +240,36 @@ public class WebManager : MonoBehaviour
         this.selectedBottom = selectedBottom;
         this.selectedTop = selectedTop;
         this.selectedHat = selectedHat;
+
+        StartCoroutine(ChangeCharacter(selectedSkinColor, "SkinColor"));
+        StartCoroutine(ChangeCharacter(selectedEyes, "Eyes"));
+        StartCoroutine(ChangeCharacter(selectedMouth, "Mouth"));
+        StartCoroutine(ChangeCharacter(selectedHair, "Hair"));
+        StartCoroutine(ChangeCharacter(selectedBottom, "Bottom"));
+        StartCoroutine(ChangeCharacter(selectedTop, "Top"));
+        StartCoroutine(ChangeCharacter(selectedHat, "Hat"));
+    }
+
+    private IEnumerator ChangeCharacter(int newPartID, string partType)
+    {
+        // create the web request and download handler
+        UnityWebRequest webReq = new UnityWebRequest();
+        webReq.downloadHandler = new DownloadHandlerBuffer();
+        // build the url and query
+        webReq.url = apiURL + "/changecharacter?UserKey=" + userKey + "&CharacterPartID=" + newPartID + "&CharacterPartType=" + partType;
+        yield return webReq.SendWebRequest();
+
+        string rawJson = Encoding.Default.GetString(webReq.downloadHandler.data);
+        // parse the raw string into a json result we can easily read
+        jsonResult = JSON.Parse(rawJson);
+        if(jsonResult["Status"] == "OK")
+        {
+            Debug.Log("Characterpart " + partType + " changed to " + newPartID);
+        }
+        else
+        {
+            Debug.Log("Characterpart " + partType + " change failed!");
+        }
     }
 
     public void GenerateUser(TMP_InputField sourceField)
