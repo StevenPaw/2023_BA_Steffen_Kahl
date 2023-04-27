@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NLG
 {
-    public class UserAccount : MonoBehaviour
+    public class UserAccount : ScriptableObject
     {
         public string username;
         public int xp;
