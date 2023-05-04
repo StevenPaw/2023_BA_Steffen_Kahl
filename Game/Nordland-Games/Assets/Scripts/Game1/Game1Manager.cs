@@ -58,7 +58,10 @@ namespace NLG.Game1
                 //Move Player
                 if (Vector2.Distance(playerBowl.transform.position, playerBowlTarget) > 0.01)
                 {
-                    playerBowl.transform.position = Vector2.MoveTowards(playerBowl.transform.position, playerBowlTarget, playerBowlSpeed * Time.deltaTime);
+                    Vector3 newPlayerPos = Vector2.MoveTowards(playerBowl.transform.position, playerBowlTarget,
+                        playerBowlSpeed * Time.deltaTime);
+                    newPlayerPos.z = -5;
+                    playerBowl.transform.position = newPlayerPos;
                 }
                 
                 if(Input.touchCount > 0)
