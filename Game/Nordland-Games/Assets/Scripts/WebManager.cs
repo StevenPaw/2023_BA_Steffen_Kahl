@@ -8,6 +8,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class WebManager : MonoBehaviour
 {
@@ -112,7 +113,19 @@ public class WebManager : MonoBehaviour
             selectedTop = jsonResult["User"]["SelectedTopID"];
             selectedHat = jsonResult["User"]["SelectedHatID"];
             welcomeText.text = "Willkommen zurück " + userNickname;
-            gameStartButton.SetActive(true);
+            userLoaded = true;
+            if (partsLoaded)
+            {
+                gameStartButton.SetActive(true);
+                gameStartButton.GetComponentInChildren<TMP_Text>().text = "Spiel starten";
+                gameStartButton.GetComponent<Button>().interactable = true;
+            }
+            else
+            {
+                gameStartButton.SetActive(true);
+                gameStartButton.GetComponentInChildren<TMP_Text>().text = "Wird geladen...";
+                gameStartButton.GetComponent<Button>().interactable = false;
+            }
         }
         else
         {
@@ -156,6 +169,14 @@ public class WebManager : MonoBehaviour
             if (partsLoaded)
             {
                 gameStartButton.SetActive(true);
+                gameStartButton.GetComponentInChildren<TMP_Text>().text = "Spiel starten";
+                gameStartButton.GetComponent<Button>().interactable = true;
+            }
+            else
+            {
+                gameStartButton.SetActive(true);
+                gameStartButton.GetComponentInChildren<TMP_Text>().text = "Wird geladen...";
+                gameStartButton.GetComponent<Button>().interactable = false;
             }
         }
         else
@@ -228,6 +249,14 @@ public class WebManager : MonoBehaviour
         if (userLoaded)
         {
             gameStartButton.SetActive(true);
+            gameStartButton.GetComponentInChildren<TMP_Text>().text = "Spiel starten";
+            gameStartButton.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            gameStartButton.SetActive(true);
+            gameStartButton.GetComponentInChildren<TMP_Text>().text = "Wird geladen...";
+            gameStartButton.GetComponent<Button>().interactable = false;
         }
     }
 

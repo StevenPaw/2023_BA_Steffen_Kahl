@@ -155,30 +155,35 @@ namespace NLG.Game1
             
             if (lives <= 0)
             {
-                liveIcon1.color = Color.grey;
-                liveIcon2.color = Color.grey;
-                liveIcon3.color = Color.grey;
-                gameState = GameStates.GAMEOVER;
-                gameOverScreen.SetActive(true);
-                playerBowlTarget = playerBowlStartPosition;
-                playerBowl.transform.position = playerBowlStartPosition;
-                playerBowl.gameObject.SetActive(false);
-                gameOverScoreText.text = "Deine Punktzahl: \n" + score + " Schneebälle";
-                
-                if(score > PlayerPrefs.GetInt("Highscore_Game1", 0))
-                {
-                    PlayerPrefs.SetInt("Highscore_Game1", score);
-                }
-                totalHighscore = PlayerPrefs.GetInt("Highscore_Game1", 0);
-                highscoreText.text = "Highscore: " + totalHighscore;
-                characterXPInfo.SetActive(true);
-                characterXPInfoText.text = "+ " + score / 10 + " XP";
+                GameOver();
             }
         }
 
         public void ReceivePoint()
         {
             score += 1;
+        }
+
+        private void GameOver()
+        {
+            liveIcon1.color = Color.grey;
+            liveIcon2.color = Color.grey;
+            liveIcon3.color = Color.grey;
+            gameState = GameStates.GAMEOVER;
+            gameOverScreen.SetActive(true);
+            playerBowlTarget = playerBowlStartPosition;
+            playerBowl.transform.position = playerBowlStartPosition;
+            playerBowl.gameObject.SetActive(false);
+            gameOverScoreText.text = "Deine Punktzahl: \n" + score + " Schneebälle";
+                
+            if(score > PlayerPrefs.GetInt("Highscore_Game1", 0))
+            {
+                PlayerPrefs.SetInt("Highscore_Game1", score);
+            }
+            totalHighscore = PlayerPrefs.GetInt("Highscore_Game1", 0);
+            highscoreText.text = "Highscore: " + totalHighscore;
+            characterXPInfo.SetActive(true);
+            characterXPInfoText.text = "+ " + score / 3 + " XP";
         }
     }
 }
