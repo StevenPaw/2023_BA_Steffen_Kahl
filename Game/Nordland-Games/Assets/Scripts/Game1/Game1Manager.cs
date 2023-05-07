@@ -184,6 +184,8 @@ namespace NLG.Game1
             highscoreText.text = "Highscore: " + totalHighscore;
             characterXPInfo.SetActive(true);
             characterXPInfoText.text = "+ " + score / 3 + " XP";
+            WebManager.instance.AddXP(score / 3);
+            WebManager.instance.AddHighscore(1, score);
         }
     }
 }

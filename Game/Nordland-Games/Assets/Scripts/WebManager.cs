@@ -325,8 +325,64 @@ public class WebManager : MonoBehaviour
 
         return null;
     }
+    
+    public void AddXP(int xp)
+    {
+        StartCoroutine(AddXPToUser(xp));
+    }
+    
+    private IEnumerator AddXPToUser(int xp)
+    {
+        // create the web request and download handler
+        UnityWebRequest webReq = new UnityWebRequest();
+        webReq.downloadHandler = new DownloadHandlerBuffer();
+        // build the url and query
+        webReq.url = apiURL + "/addxp?UserKey=" + userKey + "&XP=" + xp;
+        yield return webReq.SendWebRequest();
+
+        string rawJson = Encoding.Default.GetString(webReq.downloadHandler.data);
+        // parse the raw string into a json result we can easily read
+        jsonResult = JSON.Parse(rawJson);
+        if(jsonResult["Status"] == "OK")
+        {
+            Debug.Log(xp + " XP added to user!");
+        }
+        else
+        {
+            Debug.Log("XP add failed!");
+        }
+    }
+    
+    public void AddHighscore(int gameID, int score)
+    {
+        StartCoroutine(AddHighscoreToUser(gameID, score));
+    }
+    
+    private IEnumerator AddHighscoreToUser(int gameID, int score)
+    {
+        // create the web request and download handler
+        UnityWebRequest webReq = new UnityWebRequest();
+        webReq.downloadHandler = new DownloadHandlerBuffer();
+        // build the url and query
+        webReq.url = apiURL + "/addhighscore?UserKey=" + userKey + "&Points=" + score + "&GameID=" + gameID;
+        yield return webReq.SendWebRequest();
+
+        string rawJson = Encoding.Default.GetString(webReq.downloadHandler.data);
+        // parse the raw string into a json result we can easily read
+        jsonResult = JSON.Parse(rawJson);
+        if(jsonResult["Status"] == "OK")
+        {
+            Debug.Log(score + " Highscore added to user!");
+            userXP += score;
+        }
+        else
+        {
+            Debug.Log("Highscore add failed!");
+        }
+    }
 
     private void OnGUI()
     {
+        //Fixing a rendering bug
     }
 }
