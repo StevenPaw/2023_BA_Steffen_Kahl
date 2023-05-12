@@ -53,5 +53,6 @@ namespace NLG
         BOTTOM,
         TOP,
         HAT,
+        BACKDECO,
     }
 }

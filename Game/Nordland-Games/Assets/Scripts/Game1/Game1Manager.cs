@@ -64,11 +64,22 @@ namespace NLG.Game1
                     playerBowl.transform.position = newPlayerPos;
                 }
                 
+                //GETTING The cursor position on touch/click
+                //Support for Touch
                 if(Input.touchCount > 0)
                 {
+                    Debug.Log(Input.GetTouch(0).position);
                     Touch touch = Input.GetTouch(0);
                     playerBowlTarget = Camera.main.ScreenToWorldPoint(touch.position);
-                } 
+                }
+
+                //And for mouse
+                if (Input.GetMouseButton(0))
+                {
+                    Debug.Log(Input.mousePosition);
+                    Vector3 mouse = Input.mousePosition;
+                    playerBowlTarget = Camera.main.ScreenToWorldPoint(mouse);
+                }
                 
                 //Spawn Objects
                 if(spawnTimer >= spawnRate)

@@ -15,6 +15,7 @@ public class CharacterRenderer : MonoBehaviour
     [SerializeField] private Image imgBottom;
     [SerializeField] private Image imgTop;
     [SerializeField] private Image imgHat;
+    [SerializeField] private Image imgBackDeco;
     
     [SerializeField] private int selectedSkinColor;
     [SerializeField] private int selectedEyes;
@@ -23,6 +24,7 @@ public class CharacterRenderer : MonoBehaviour
     [SerializeField] private int selectedBottom;
     [SerializeField] private int selectedTop;
     [SerializeField] private int selectedHat;
+    [SerializeField] private int selectedBackDeco;
     [SerializeField] private string sceneToLoadAfterSaving;
     
     private WebManager webManager;
@@ -34,6 +36,7 @@ public class CharacterRenderer : MonoBehaviour
     public int SelectedEyes => selectedEyes;
     public int SelectedMouth => selectedMouth;
     public int SelectedHair => selectedHair;
+    public int SelectedBackDeco => selectedBackDeco;
 
     private void Start()
     {
@@ -80,6 +83,12 @@ public class CharacterRenderer : MonoBehaviour
             imgHat.sprite = webManager.GetCharacterPartByID(webManager.SelectedHat).Image;
             selectedHat = webManager.SelectedHat;
         }
+        
+        if(webManager.SelectedBackDeco != 0)
+        {
+            imgBackDeco.sprite = webManager.GetCharacterPartByID(webManager.SelectedBackDeco).Image;
+            selectedBackDeco = webManager.SelectedBackDeco;
+        }
     }
 
     public void ChangeSelectedCharacterPart(CharacterPartTypes type, int changedID)
@@ -114,12 +123,16 @@ public class CharacterRenderer : MonoBehaviour
                 selectedHat = changedID;
                 imgHat.sprite = webManager.GetCharacterPartByID(selectedHat).Image;
                 break;
+            case CharacterPartTypes.BACKDECO:
+                selectedBackDeco = changedID;
+                imgBackDeco.sprite = webManager.GetCharacterPartByID(selectedBackDeco).Image;
+                break;
         }
     }
 
     public void SaveChangedCharacter()
     {
-        webManager.SetNewBodyParts(selectedSkinColor, selectedEyes, selectedMouth, selectedHair, selectedBottom, selectedTop, selectedHat);
+        webManager.SetNewBodyParts(selectedSkinColor, selectedEyes, selectedMouth, selectedHair, selectedBottom, selectedTop, selectedHat, selectedBackDeco);
         SceneManager.LoadScene(sceneToLoadAfterSaving);
     }
 }

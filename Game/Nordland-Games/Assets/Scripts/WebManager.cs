@@ -38,6 +38,7 @@ public class WebManager : MonoBehaviour
     [SerializeField] private int selectedBottom;
     [SerializeField] private int selectedTop;
     [SerializeField] private int selectedHat;
+    [SerializeField] private int selectedBackDeco;
 
     [Header("MenuScene")] 
     [SerializeField] private string menuScene;
@@ -51,6 +52,7 @@ public class WebManager : MonoBehaviour
     public int SelectedEyes => selectedEyes;
     public int SelectedMouth => selectedMouth;
     public int SelectedHair => selectedHair;
+    public int SelectedBackDeco => selectedBackDeco;
 
     public string UserNickname => userNickname;
     public int UserXP => userXP;
@@ -112,6 +114,7 @@ public class WebManager : MonoBehaviour
             selectedBottom = jsonResult["User"]["SelectedBottomID"];
             selectedTop = jsonResult["User"]["SelectedTopID"];
             selectedHat = jsonResult["User"]["SelectedHatID"];
+            selectedBackDeco = jsonResult["User"]["SelectedBackDecoID"];
             welcomeText.text = "Willkommen zurück " + userNickname;
             userLoaded = true;
             if (partsLoaded)
@@ -129,6 +132,7 @@ public class WebManager : MonoBehaviour
         }
         else
         {
+            noAccountPopup.SetActive(true);
             errorText.gameObject.SetActive(true);
             errorText.text = "Nickname bereits vergeben!";
             Debug.Log("Creation of User unsuccessful!");
@@ -161,6 +165,7 @@ public class WebManager : MonoBehaviour
             selectedBottom = 0;
             selectedTop = 0;
             selectedHat = 0;
+            selectedBackDeco = 0;
             PlayerPrefs.SetString("UserKey", userKey);
             connectionPopup.SetActive(true);
             noAccountPopup.SetActive(false);
@@ -239,6 +244,8 @@ public class WebManager : MonoBehaviour
                     newPart.Type = CharacterPartTypes.TOP;
                 } else if (part["Type"].ToString().ToUpper().Contains("HAT")) {
                     newPart.Type = CharacterPartTypes.HAT;
+                } else if (part["Type"].ToString().ToUpper().Contains("BACKDECO")) {
+                    newPart.Type = CharacterPartTypes.BACKDECO;
                 }
                 
                 characterParts.Add(newPart);
@@ -260,7 +267,7 @@ public class WebManager : MonoBehaviour
         }
     }
 
-    public void SetNewBodyParts(int selectedSkinColor, int selectedEyes, int selectedMouth, int selectedHair, int selectedBottom, int selectedTop, int selectedHat)
+    public void SetNewBodyParts(int selectedSkinColor, int selectedEyes, int selectedMouth, int selectedHair, int selectedBottom, int selectedTop, int selectedHat, int selectedBackDeco)
     {
         this.selectedSkinColor = selectedSkinColor;
         this.selectedEyes = selectedEyes;
@@ -269,6 +276,7 @@ public class WebManager : MonoBehaviour
         this.selectedBottom = selectedBottom;
         this.selectedTop = selectedTop;
         this.selectedHat = selectedHat;
+        this.selectedBackDeco = selectedBackDeco;
 
         StartCoroutine(ChangeCharacter(selectedSkinColor, "SkinColor"));
         StartCoroutine(ChangeCharacter(selectedEyes, "Eyes"));
@@ -277,6 +285,7 @@ public class WebManager : MonoBehaviour
         StartCoroutine(ChangeCharacter(selectedBottom, "Bottom"));
         StartCoroutine(ChangeCharacter(selectedTop, "Top"));
         StartCoroutine(ChangeCharacter(selectedHat, "Hat"));
+        StartCoroutine(ChangeCharacter(selectedBackDeco, "BackDeco"));
     }
 
     private IEnumerator ChangeCharacter(int newPartID, string partType)
@@ -305,6 +314,12 @@ public class WebManager : MonoBehaviour
     {
         Debug.Log(sourceField.text);
         StartCoroutine(CreateUserAccount(sourceField.text));
+    }
+    
+    public void GenerateUserByJS(string input)
+    {
+        Debug.Log(input);
+        StartCoroutine(CreateUserAccount(input));
     }
 
     public void StartGame()
