@@ -1,5 +1,5 @@
 <?php
-namespace App\ExperienceDatabase;
+namespace App\Users;
 
 use SilverStripe\Admin\ModelAdmin;
 use App\Users\UserData;

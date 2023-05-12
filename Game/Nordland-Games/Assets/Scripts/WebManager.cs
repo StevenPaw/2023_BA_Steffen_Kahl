@@ -361,6 +361,7 @@ public class WebManager : MonoBehaviour
         if(jsonResult["Status"] == "OK")
         {
             Debug.Log(xp + " XP added to user!");
+            userXP += xp;
         }
         else
         {
@@ -388,7 +389,6 @@ public class WebManager : MonoBehaviour
         if(jsonResult["Status"] == "OK")
         {
             Debug.Log(score + " Highscore added to user!");
-            userXP += score;
         }
         else
         {

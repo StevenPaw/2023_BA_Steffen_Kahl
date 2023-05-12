@@ -11,6 +11,7 @@
 
 @import "layout/textimage.scss";
 @import "layout/text.scss";
+@import "layout/HighScoreElement";
 
 body{
     background-color: #001d2b;
@@ -18,8 +19,10 @@ body{
 
 .section {
     max-width: $maxWidth;
+    margin: 0 auto;
 }
 
 .section_content{
     max-width: $maxWidthContent;
+    margin: 0 auto;
 }

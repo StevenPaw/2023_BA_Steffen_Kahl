@@ -1,58 +1,55 @@
 <?php
 
-namespace App\CharacterDatabase;
+namespace App\Games;
 
+use App\Games\HighScore;
 use SilverStripe\Assets\Image;
 use SilverStripe\ORM\DataObject;
-use App\CharacterDatabase\UserData;
 use SilverStripe\Security\Permission;
 
 /**
  * Class \App\Database\Experience
  *
  * @property string $Title
- * @property string $Type
- * @property int $RequiredXP
- * @property int $ImageID
- * @method \SilverStripe\Assets\Image Image()
+ * @property string $Description
+ * @property int $BackgroundImageID
+ * @method \SilverStripe\Assets\Image BackgroundImage()
+ * @method \SilverStripe\ORM\DataList|\App\Games\HighScore[] Highscores()
  */
-class CharacterPart extends DataObject
+class Game extends DataObject
 {
     private static $db = [
         "Title" => "Varchar(255)",
-        "Type" => "Enum('None, SkinColor, Eyes, Mouth, Hair, Bottom, Top, Hat, BackDeco', 'None')",
-        "RequiredXP" => "Int",
+        "Description" => "Text",
     ];
 
     private static $has_one = [
-        "Image" => Image::class,
+        "BackgroundImage" => Image::class
     ];
 
-    private static $owns = [
-        "Image",
-    ];
-
-    private static $belongs_many = [
-        "UserData" => UserData::class,
+    private static $has_many = [
+        "Highscores" => HighScore::class,
     ];
 
     private static $summary_fields = [
-        "ID" => "ID",
-        "Title" => "Title",
-        "Type" => "Type",
     ];
 
     private static $field_labels = [
     ];
 
-    private static $default_sort = "Type ASC, ID ASC";
+    private static $default_sort = "ID ASC";
 
-    private static $table_name = "CharacterPart";
+    private static $table_name = "Game";
 
-    private static $singular_name = "Part";
-    private static $plural_name = "Parts";
+    private static $singular_name = "Game";
+    private static $plural_name = "Games";
 
-    private static $url_segment = "character-part";
+    private static $url_segment = "games";
+
+    public function onBeforeWrite()
+    {
+        parent::onBeforeWrite();
+    }
 
     public function getCMSFields()
     {

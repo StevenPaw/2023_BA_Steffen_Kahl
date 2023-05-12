@@ -16,7 +16,7 @@ mix.setPublicPath(dist)
     .sourceMaps(true)
     .version()
     .browserSync({
-        proxy: 'http://localhost/2023_BA_Steffen_Kahl/Website/public',
+        proxy: 'http://localhost/NLG-API/public',
         files: [
             "public/_resources/app/client/dist/css/*.css",
             "public/_resources/app/client/dist/js/*.js",

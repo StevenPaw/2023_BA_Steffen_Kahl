@@ -18,10 +18,6 @@ AddHandler default-handler php phtml php3 php4 php5 inc
         SetEnv HTTP_MOD_REWRITE On
     </IfModule>
 
-    <IfModule mod_headers.c>
-        Header set Access-Control-Allow-Origin *
-    </IfModule>
-
     RewriteEngine On
 
     # Allow error pages

@@ -2,6 +2,8 @@
 
 namespace {
 
+    use App\Games\Game;
+    use App\Games\HighScore;
     use App\CharacterDatabase\CharacterPart;
     use Firebase\JWT\JWT;
     use Firebase\JWT\Key;
@@ -32,7 +34,9 @@ namespace {
             "token",
             "account",
             "characterparts",
-            "changecharacter"
+            "changecharacter",
+            "addhighscore",
+            "addxp",
         ];
 
         public function index(HTTPRequest $request)
@@ -44,7 +48,7 @@ namespace {
             $data['Copyright'] = "This API is developed and maintained by Steffen Kahl. All rights reserved.";
 
             $this->response->addHeader('Content-Type', 'application/json');
-            $this->response->addHeader('Access-Control-Allow-Origin', '*');
+            //$this->response->addHeader('Access-Control-Allow-Origin', '*');
             return json_encode($data);
         }
 
@@ -109,7 +113,7 @@ namespace {
             }
 
             $this->response->addHeader('Content-Type', 'application/json');
-            $this->response->addHeader('Access-Control-Allow-Origin', '*');
+            //$this->response->addHeader('Access-Control-Allow-Origin', '*');
             return json_encode($data);
         }
 
@@ -147,7 +151,7 @@ namespace {
             }
 
             $this->response->addHeader('Content-Type', 'application/json');
-            $this->response->addHeader('Access-Control-Allow-Origin', '*');
+            //$this->response->addHeader('Access-Control-Allow-Origin', '*');
             return json_encode($data);
         }
 
@@ -177,6 +181,8 @@ namespace {
                         $user->SelectedTopID = $characterpartid;
                     } else if ($characterparttype == "Hat") {
                         $user->SelectedHatID = $characterpartid;
+                    } else if ($characterparttype == "BackDeco") {
+                        $user->SelectedBackDecoID = $characterpartid;
                     }
                     $user->write();
                 } else {
@@ -189,7 +195,68 @@ namespace {
             }
 
             $this->response->addHeader('Content-Type', 'application/json');
-            $this->response->addHeader('Access-Control-Allow-Origin', '*');
+            //$this->response->addHeader('Access-Control-Allow-Origin', '*');
+            return json_encode($data);
+        }
+
+        public function addhighscore(HTTPRequest $request)
+        {
+            $userkey = $request->getVar("UserKey");
+            $gameid = $request->getVar("GameID");
+            $points = $request->getVar("Points");
+
+            if ($userkey && $gameid && $points) {
+                $user = UserData::get()->filter("UserKey", $userkey)->first();
+
+                if ($user) {
+                    $game = Game::get()->byID($gameid);
+
+                    HighScore::create([
+                        "Points" => $points,
+                        "ParentID" => $gameid,
+                        "UserID" => $user->ID
+                    ])->write();
+                    $data['Status'] = "OK";
+                } else {
+                    $data['Status'] = "ERROR";
+                    $data['Error'] = "No User With This UserKey Found";
+                }
+            } else {
+                $data['Status'] = "ERROR";
+                $data['Error'] = "No UserKey, GameID or Points provided";
+            }
+
+            $this->response->addHeader('Content-Type', 'application/json');
+            //$this->response->addHeader('Access-Control-Allow-Origin', '*');
+            return json_encode($data);
+        }
+
+        public function addxp(HTTPRequest $request)
+        {
+            $userkey = $request->getVar("UserKey");
+            $xp = $request->getVar("XP");
+
+            if ($userkey && $xp) {
+                $user = UserData::get()->filter("UserKey", $userkey)->first();
+
+                if ($user) {
+                    $currentXP = $user->XP;
+
+                    $user->XP = $currentXP + $xp;
+                    $user->write();
+
+                    $data['Status'] = "OK";
+                } else {
+                    $data['Status'] = "ERROR";
+                    $data['Error'] = "No User With This UserKey Found";
+                }
+            } else {
+                $data['Status'] = "ERROR";
+                $data['Error'] = "No UserKey or XP provided";
+            }
+
+            $this->response->addHeader('Content-Type', 'application/json');
+            //$this->response->addHeader('Access-Control-Allow-Origin', '*');
             return json_encode($data);
         }
 
