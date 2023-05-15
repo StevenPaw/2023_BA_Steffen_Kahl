@@ -55,11 +55,29 @@ namespace NLG.Game1
             {
                 spawnTimer += Time.deltaTime;
                 
+                //Keep Player in bounds
+                if(playerBowl.transform.position.x < Camera.main.ScreenToWorldPoint(new Vector3(0,0)).x)
+                {
+                    playerBowlTarget.x = Camera.main.ScreenToWorldPoint(new Vector3(0,0)).x;
+                }
+                else if(playerBowl.transform.position.x > Camera.main.ScreenToWorldPoint(new Vector3(Screen.width,0)).x)
+                {
+                    playerBowlTarget.x = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width,0)).x;
+                }
+                if(playerBowl.transform.position.y < Camera.main.ScreenToWorldPoint(new Vector3(0,0)).y)
+                {
+                    playerBowlTarget.y = Camera.main.ScreenToWorldPoint(new Vector3(0,0)).y;
+                }
+                else if(playerBowl.transform.position.y > Camera.main.ScreenToWorldPoint(new Vector3(0,Screen.height / 2)).y)
+                {
+                    playerBowlTarget.y = Camera.main.ScreenToWorldPoint(new Vector3(0,Screen.height / 2)).y;
+                }
+                
                 //Move Player
                 if (Vector2.Distance(playerBowl.transform.position, playerBowlTarget) > 0.01)
                 {
                     Vector3 newPlayerPos = Vector2.MoveTowards(playerBowl.transform.position, playerBowlTarget,
-                        playerBowlSpeed * Time.deltaTime);
+                        playerBowlSpeed * Time.deltaTime * (Screen.width / 300));
                     newPlayerPos.z = -5;
                     playerBowl.transform.position = newPlayerPos;
                 }
@@ -68,7 +86,6 @@ namespace NLG.Game1
                 //Support for Touch
                 if(Input.touchCount > 0)
                 {
-                    Debug.Log(Input.GetTouch(0).position);
                     Touch touch = Input.GetTouch(0);
                     playerBowlTarget = Camera.main.ScreenToWorldPoint(touch.position);
                 }
@@ -76,7 +93,6 @@ namespace NLG.Game1
                 //And for mouse
                 if (Input.GetMouseButton(0))
                 {
-                    Debug.Log(Input.mousePosition);
                     Vector3 mouse = Input.mousePosition;
                     playerBowlTarget = Camera.main.ScreenToWorldPoint(mouse);
                 }
@@ -91,13 +107,13 @@ namespace NLG.Game1
                 //Increase Speed
                 spawnRate = spawnRateCurve.Evaluate(score);
                 playerBowlSpeed = playerBowlSpeedCurve.Evaluate(score);
-                Debug.Log(spawnRate);
                 highscoreText.text = "Schneebälle: " + score;
             }
         }
         
         private void SpawnObject()
         {
+            window = Screen.safeArea;
             GameObject prefab = null;
             int random = UnityEngine.Random.Range(0, 4);
             if(random == 0)
