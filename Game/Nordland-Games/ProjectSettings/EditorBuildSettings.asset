@@ -17,5 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game1-MtRushington Snowfall.unity
     guid: aceba012a68c28149a90222035fff427
+  - enabled: 1
+    path: Assets/Scenes/Game2-GhostMountain Spirit Catcher.unity
+    guid: 766c03bea74520447b71309db64ed89e
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: f19d9d3ff580312488462d25f12e86ce, type: 2}

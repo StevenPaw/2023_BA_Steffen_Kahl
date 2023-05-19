@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using NLG;
 using UnityEngine;
@@ -10,12 +9,18 @@ public class CharacterEditorManager : MonoBehaviour
     [SerializeField] private CharacterPartTypes activePartType;
     [SerializeField] private GameObject selectorEntryPrefab;
     [SerializeField] private GameObject selectorEntryContainer;
+    [SerializeField] private GameObject[] categoryButtons;
 
     public CharacterPartTypes ActivePartType => activePartType;
 
     // Start is called before the first frame update
     void Start()
     {
+        foreach (GameObject button in categoryButtons)
+        {
+            button.GetComponent<RectTransform>().SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, Screen.width / 15.5f);
+        }
+        
         parts = WebManager.instance.CharacterParts;
 
         foreach (Transform childTransforms in selectorEntryContainer.transform)
