@@ -42,52 +42,55 @@ public class CharacterRenderer : MonoBehaviour
     {
         webManager = WebManager.instance;
 
-        if (webManager.SelectedSkinColor != 0)
+        if (webManager)
         {
-            imgSkinColor.sprite = webManager.GetCharacterPartByID(webManager.SelectedSkinColor).Image;
-            selectedSkinColor = webManager.SelectedSkinColor;
-        }
+            if (webManager.SelectedSkinColor != 0)
+            {
+                imgSkinColor.sprite = webManager.GetCharacterPartByID(webManager.SelectedSkinColor).Image;
+                selectedSkinColor = webManager.SelectedSkinColor;
+            }
 
-        if (webManager.SelectedEyes != 0)
-        {
-            imgEyes.sprite = webManager.GetCharacterPartByID(webManager.SelectedEyes).Image;
-            selectedEyes = webManager.SelectedEyes;
-        }
+            if (webManager.SelectedEyes != 0)
+            {
+                imgEyes.sprite = webManager.GetCharacterPartByID(webManager.SelectedEyes).Image;
+                selectedEyes = webManager.SelectedEyes;
+            }
 
-        if(webManager.SelectedMouth != 0)
-        {
-            imgMouth.sprite = webManager.GetCharacterPartByID(webManager.SelectedMouth).Image;
-            selectedMouth = webManager.SelectedMouth;
-        }
-        
-        if(webManager.SelectedHair != 0)
-        {
-            imgHair.sprite = webManager.GetCharacterPartByID(webManager.SelectedHair).Image;
-            selectedHair = webManager.SelectedHair;
-        }
-        
-        if(webManager.SelectedBottom != 0)
-        {
-            imgBottom.sprite = webManager.GetCharacterPartByID(webManager.SelectedBottom).Image;
-            selectedBottom = webManager.SelectedBottom;
-        }
-        
-        if(webManager.SelectedTop != 0)
-        {
-            imgTop.sprite = webManager.GetCharacterPartByID(webManager.SelectedTop).Image;
-            selectedTop = webManager.SelectedTop;
-        }
-        
-        if(webManager.SelectedHat != 0)
-        {
-            imgHat.sprite = webManager.GetCharacterPartByID(webManager.SelectedHat).Image;
-            selectedHat = webManager.SelectedHat;
-        }
-        
-        if(webManager.SelectedBackDeco != 0)
-        {
-            imgBackDeco.sprite = webManager.GetCharacterPartByID(webManager.SelectedBackDeco).Image;
-            selectedBackDeco = webManager.SelectedBackDeco;
+            if (webManager.SelectedMouth != 0)
+            {
+                imgMouth.sprite = webManager.GetCharacterPartByID(webManager.SelectedMouth).Image;
+                selectedMouth = webManager.SelectedMouth;
+            }
+
+            if (webManager.SelectedHair != 0)
+            {
+                imgHair.sprite = webManager.GetCharacterPartByID(webManager.SelectedHair).Image;
+                selectedHair = webManager.SelectedHair;
+            }
+
+            if (webManager.SelectedBottom != 0)
+            {
+                imgBottom.sprite = webManager.GetCharacterPartByID(webManager.SelectedBottom).Image;
+                selectedBottom = webManager.SelectedBottom;
+            }
+
+            if (webManager.SelectedTop != 0)
+            {
+                imgTop.sprite = webManager.GetCharacterPartByID(webManager.SelectedTop).Image;
+                selectedTop = webManager.SelectedTop;
+            }
+
+            if (webManager.SelectedHat != 0)
+            {
+                imgHat.sprite = webManager.GetCharacterPartByID(webManager.SelectedHat).Image;
+                selectedHat = webManager.SelectedHat;
+            }
+
+            if (webManager.SelectedBackDeco != 0)
+            {
+                imgBackDeco.sprite = webManager.GetCharacterPartByID(webManager.SelectedBackDeco).Image;
+                selectedBackDeco = webManager.SelectedBackDeco;
+            }
         }
     }
 

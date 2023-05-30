@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Game2
 {
-    public class Game2Manager : MonoBehaviour
+    public class Game2Manager : MonoBehaviour, IGameManager
     {
         [Header("GameState")]
         [SerializeField] private GameStates gameState;
@@ -71,10 +71,6 @@ namespace Game2
 
         public void Update()
         {
-            Debug.DrawLine(Camera.main.ScreenToWorldPoint(new Vector3(window.xMin, window.yMin)), Camera.main.ScreenToWorldPoint(new Vector3(window.xMax, window.y )),Color.red);
-            Debug.DrawLine(Camera.main.ScreenToWorldPoint(new Vector3(window.xMin, window.yMin)), Camera.main.ScreenToWorldPoint(new Vector3(window.x , window.yMax)), Color.red);
-            Debug.DrawLine(Camera.main.ScreenToWorldPoint(new Vector3(window.xMax, window.yMax)), Camera.main.ScreenToWorldPoint(new Vector3(window.xMax, window.y)), Color.red);
-            Debug.DrawLine(Camera.main.ScreenToWorldPoint(new Vector3(window.xMax, window.yMax)), Camera.main.ScreenToWorldPoint(new Vector3(window.x, window.yMax)), Color.red);
             if(gameState == GameStates.INGAME)
             {
                 spawnRate = spawnRateCurve.Evaluate(score);
@@ -106,12 +102,6 @@ namespace Game2
             ghost.GetComponent<Ghost>().Game2Manager = this;
         }
 
-        public void AddPointToScore()
-        {
-            score++;
-            highscoreText.text = "Gefangene Seelen: " + score;
-        }
-
         public void TakeDamage()
         {
             //Only take damage if the game is running
@@ -133,7 +123,37 @@ namespace Game2
             }
         }
 
-        private void GameOver()
+        public void ReceivePoint()
+        {
+            score++;
+            highscoreText.text = "Gefangene Seelen: " + score;
+        }
+
+        public void PauseGame()
+        {
+            gameState = GameStates.PAUSED;
+            Time.timeScale = 0;
+        }
+        
+        public void ResumeGame()
+        {
+            gameState = GameStates.INGAME;
+            Time.timeScale = 1;
+        }
+
+        public void TogglePause()
+        {
+            if (gameState == GameStates.PAUSED)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
+
+        public void GameOver()
         {
             gameState = GameStates.GAMEOVER;
             gameOverScreen.SetActive(true);

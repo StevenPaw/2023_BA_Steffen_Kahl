@@ -66,7 +66,7 @@ namespace Game2
         private void OnMouseDown()
         {
             ghostAnimator.SetTrigger("Despawn");
-            game2Manager.AddPointToScore();
+            game2Manager.ReceivePoint();
             escapeProgress = 0;
             ghostAnimator.speed = 1;
             captured = true;

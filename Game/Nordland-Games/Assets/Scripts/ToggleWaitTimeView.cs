@@ -8,6 +8,7 @@ public class ToggleWaitTimeView : MonoBehaviour
     
     public void ToggleView()
     {
+        Debug.Log("ToggleView");
         viewAnimator.SetBool("isActive", !viewAnimator.GetBool("isActive"));
     }
 }

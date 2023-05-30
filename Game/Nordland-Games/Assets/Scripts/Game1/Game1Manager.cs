@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace NLG.Game1
 {
-    public class Game1Manager : MonoBehaviour
+    public class Game1Manager : MonoBehaviour, IGameManager
     {
         [Header("GameState")]
         [SerializeField] private GameStates gameState;
@@ -37,13 +37,16 @@ namespace NLG.Game1
 
         [SerializeField] private GameObject characterXPInfo;
         [SerializeField] private TMP_Text characterXPInfoText;
+        private Camera mainCamera;
         
         private Rect window;
+        Vector3 newPlayerPos;
 
         private void Start()
         {
             window = Screen.safeArea;
-            playerBowlStartPosition = Camera.main.ScreenToWorldPoint(new Vector2(window.width / 2, 100));
+            mainCamera = Camera.main;
+            playerBowlStartPosition = mainCamera.ScreenToWorldPoint(new Vector2(window.width / 2, 100));
             playerBowl.gameObject.SetActive(false);
             highscoreText.text = "Highscore: " + PlayerPrefs.GetInt("Highscore_Game1", 0);
             characterXPInfo.SetActive(false);
@@ -55,46 +58,54 @@ namespace NLG.Game1
             {
                 spawnTimer += Time.deltaTime;
                 
-                //Keep Player in bounds
-                if(playerBowl.transform.position.x < Camera.main.ScreenToWorldPoint(new Vector3(0,0)).x)
-                {
-                    playerBowlTarget.x = Camera.main.ScreenToWorldPoint(new Vector3(0,0)).x;
-                }
-                else if(playerBowl.transform.position.x > Camera.main.ScreenToWorldPoint(new Vector3(Screen.width,0)).x)
-                {
-                    playerBowlTarget.x = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width,0)).x;
-                }
-                if(playerBowl.transform.position.y < Camera.main.ScreenToWorldPoint(new Vector3(0,0)).y)
-                {
-                    playerBowlTarget.y = Camera.main.ScreenToWorldPoint(new Vector3(0,0)).y;
-                }
-                else if(playerBowl.transform.position.y > Camera.main.ScreenToWorldPoint(new Vector3(0,Screen.height / 2)).y)
-                {
-                    playerBowlTarget.y = Camera.main.ScreenToWorldPoint(new Vector3(0,Screen.height / 2)).y;
-                }
-                
                 //Move Player
                 if (Vector2.Distance(playerBowl.transform.position, playerBowlTarget) > 0.01)
                 {
-                    Vector3 newPlayerPos = Vector2.MoveTowards(playerBowl.transform.position, playerBowlTarget,
+                    newPlayerPos = Vector2.MoveTowards(playerBowl.transform.position, playerBowlTarget,
                         playerBowlSpeed * Time.deltaTime * (Screen.width / 300));
                     newPlayerPos.z = -5;
-                    playerBowl.transform.position = newPlayerPos;
                 }
+                
+                //Keep Player in bounds
+                if(newPlayerPos.x < mainCamera.ScreenToWorldPoint(new Vector3(0,0)).x)
+                {
+                    newPlayerPos.x = mainCamera.ScreenToWorldPoint(new Vector3(0,0)).x;
+                }
+                else if(newPlayerPos.x > mainCamera.ScreenToWorldPoint(new Vector3(Screen.width,0)).x)
+                {
+                    newPlayerPos.x = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width,0)).x;
+                }
+                if(newPlayerPos.y < mainCamera.ScreenToWorldPoint(new Vector3(0,0)).y)
+                {
+                    newPlayerPos.y = mainCamera.ScreenToWorldPoint(new Vector3(0,0)).y;
+                }
+                else if(newPlayerPos.y > mainCamera.ScreenToWorldPoint(new Vector3(0,Screen.height * 0.5f)).y)
+                {
+                    newPlayerPos.y = mainCamera.ScreenToWorldPoint(new Vector3(0,Screen.height * 0.5f)).y;
+                }
+                
+                playerBowl.transform.position = newPlayerPos;
                 
                 //GETTING The cursor position on touch/click
                 //Support for Touch
                 if(Input.touchCount > 0)
                 {
                     Touch touch = Input.GetTouch(0);
-                    playerBowlTarget = Camera.main.ScreenToWorldPoint(touch.position);
+                    Vector3 touchPosition = touch.position;
+                    if (touchPosition.y < window.height * 0.5f)
+                    {
+                        playerBowlTarget = mainCamera.ScreenToWorldPoint(touchPosition);
+                    }
                 }
 
                 //And for mouse
                 if (Input.GetMouseButton(0))
                 {
                     Vector3 mouse = Input.mousePosition;
-                    playerBowlTarget = Camera.main.ScreenToWorldPoint(mouse);
+                    if (mouse.y < window.height * 0.5f)
+                    {
+                        playerBowlTarget = mainCamera.ScreenToWorldPoint(mouse);
+                    }
                 }
                 
                 //Spawn Objects
@@ -114,8 +125,8 @@ namespace NLG.Game1
         private void SpawnObject()
         {
             window = Screen.safeArea;
-            GameObject prefab = null;
-            int random = UnityEngine.Random.Range(0, 4);
+            GameObject prefab;
+            int random = Random.Range(0, 4);
             if(random == 0)
             {
                 prefab = fireBallPrefab;
@@ -131,7 +142,7 @@ namespace NLG.Game1
             //Calculate new Positions until it is far away enough from the last spawn point
             do
             {
-                newPos = Camera.main.ScreenToWorldPoint(new Vector3(UnityEngine.Random.Range(0, window.width),
+                newPos = mainCamera.ScreenToWorldPoint(new Vector3(Random.Range(window.width * 0.05f, window.width * 0.95f),
                     window.height + (window.height * 0.5f), 20));
 
                 //Break the while loop if it takes too long
@@ -191,7 +202,31 @@ namespace NLG.Game1
             score += 1;
         }
 
-        private void GameOver()
+        public void PauseGame()
+        {
+            gameState = GameStates.PAUSED;
+            Time.timeScale = 0;
+        }
+        
+        public void ResumeGame()
+        {
+            gameState = GameStates.INGAME;
+            Time.timeScale = 1;
+        }
+        
+        public void TogglePause()
+        {
+            if (gameState == GameStates.PAUSED)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
+
+        public void GameOver()
         {
             liveIcon1.color = Color.grey;
             liveIcon2.color = Color.grey;
