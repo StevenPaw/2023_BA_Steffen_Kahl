@@ -1,22 +1,26 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PumpClickable : MonoBehaviour, IPointerClickHandler
+namespace NLG.Game3
 {
-    [SerializeField] private Vector2 forceOnClick;
-    private Rigidbody2D rb;
-
-    private void Start()
+    public class PumpClickable : MonoBehaviour, IPointerClickHandler
     {
-        rb = gameObject.GetComponent<Rigidbody2D>();
-    }
+        [SerializeField] private Vector2 forceOnClick;
+        private Game3Manager gameManager;
+        private Rigidbody2D rb;
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        rb.AddForce(forceOnClick, ForceMode2D.Impulse);
-        Debug.Log("Clicked");
+        private void Start()
+        {
+            gameManager = FindObjectOfType<Game3Manager>();
+            rb = gameObject.GetComponent<Rigidbody2D>();
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if(gameManager.GameState != GameStates.INGAME) return;
+            
+            rb.AddForce(forceOnClick, ForceMode2D.Impulse);
+            Debug.Log("Clicked");
+        }
     }
 }

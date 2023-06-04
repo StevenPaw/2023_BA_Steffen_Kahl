@@ -18,10 +18,9 @@ namespace NLG.Game3
         [SerializeField] private Vector2 minSpawnDirection;
         
         [Header("ScoreVariables")]
-        [SerializeField] private int score;
+        [SerializeField] private float score;
         [SerializeField] private int lives;
         [SerializeField] private int maxLives;
-        [SerializeField] private float shineTimer = 0;
         
         [Header("UI Elements")]
         [SerializeField] private TMP_Text highscoreText;
@@ -40,6 +39,8 @@ namespace NLG.Game3
 
         private Camera mainCamera;
         private Rect window;
+
+        public GameStates GameState => gameState;
 
         public bool CrystalSpawned
         {
@@ -61,6 +62,12 @@ namespace NLG.Game3
             {
                 SpawnObject();
             }
+
+            if (gameState == GameStates.INGAME)
+            {
+                highscoreText.text = "Polierte Materie: " + score.ToString("F0");
+            }
+            
         }
         
         private void SpawnObject()
@@ -68,7 +75,6 @@ namespace NLG.Game3
             float randomX = Random.Range(minSpawnDirection.x, maxSpawnDirection.x);
             float randomY = Random.Range(minSpawnDirection.y, maxSpawnDirection.y);
             Vector2 randomDirection = new Vector2(randomX, randomY);
-            Debug.Log(randomDirection);
             GameObject ball = Instantiate(ballPrefab, spawnPoint.position, Quaternion.identity);
             ball.GetComponent<Rigidbody2D>().AddForce(randomDirection);
             crystalSpawned = true;
@@ -79,9 +85,9 @@ namespace NLG.Game3
             score = 0;
             lives = maxLives;
             gameState = GameStates.INGAME;
-            liveIcon1.color = Color.red;
-            liveIcon2.color = Color.red;
-            liveIcon3.color = Color.red;
+            liveIcon1.color = Color.cyan;
+            liveIcon2.color = Color.cyan;
+            liveIcon3.color = Color.cyan;
             characterXPInfo.SetActive(false);
         }
 
@@ -92,26 +98,29 @@ namespace NLG.Game3
             if (lives <= 2)
             {
                 liveIcon1.color = Color.grey;
-                liveIcon2.color = Color.red;
-                liveIcon3.color = Color.red;
+                liveIcon2.color = Color.cyan;
+                liveIcon3.color = Color.cyan;
             }
             
             if (lives <= 1)
             {
                 liveIcon1.color = Color.grey;
                 liveIcon2.color = Color.grey;
-                liveIcon3.color = Color.red;
+                liveIcon3.color = Color.cyan;
             }
             
             if (lives <= 0)
             {
+                liveIcon1.color = Color.grey;
+                liveIcon2.color = Color.grey;
+                liveIcon3.color = Color.grey;
                 GameOver();
             }
         }
 
         public void ReceivePoint()
         {
-            score += 1;
+            score += 0.1f;
         }
 
         public void PauseGame()
@@ -145,20 +154,20 @@ namespace NLG.Game3
             liveIcon3.color = Color.grey;
             gameState = GameStates.GAMEOVER;
             gameOverScreen.SetActive(true);
-            gameOverScoreText.text = "Deine Punktzahl: \n" + score + " Schneebälle";
+            gameOverScoreText.text = "Deine Punktzahl: \n" + (int)score + " polierte Materie";
                 
             if(score > PlayerPrefs.GetInt("Highscore_Game3", 0))
             {
-                PlayerPrefs.SetInt("Highscore_Game1", score);
+                PlayerPrefs.SetInt("Highscore_Game3", (int)score);
             }
             totalHighscore = PlayerPrefs.GetInt("Highscore_Game3", 0);
             highscoreText.text = "Highscore: " + totalHighscore;
             characterXPInfo.SetActive(true);
-            characterXPInfoText.text = "+ " + score / 3 + " XP";
+            characterXPInfoText.text = "+ " + (int)score / 5 + " XP";
             if (WebManager.instance != null)
             {
-                WebManager.instance.AddXP(score / 3);
-                WebManager.instance.AddHighscore(1, score);
+                WebManager.instance.AddXP((int)score / 5);
+                WebManager.instance.AddHighscore(3, (int)score);
             }
         }
     }
