@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace NLG
 {
+    /// <summary>
+    /// A scriptable object to store all data about a user account.
+    /// </summary>
     public class UserAccount : ScriptableObject
     {
         public string username;

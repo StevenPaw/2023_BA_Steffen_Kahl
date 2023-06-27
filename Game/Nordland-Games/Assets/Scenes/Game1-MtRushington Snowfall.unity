@@ -2459,7 +2459,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49590b05fbe8e0f478c222d80d9e8a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  game1Manager: {fileID: 1113207388}
 --- !u!50 &939623989
 Rigidbody2D:
   serializedVersion: 4
@@ -3216,18 +3215,6 @@ MonoBehaviour:
       - m_Target: {fileID: 1064484091}
         m_TargetAssemblyTypeName: ToggleWaitTimeView, Assembly-CSharp
         m_MethodName: ToggleView
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1113207388}
-        m_TargetAssemblyTypeName: NLG.Game1.Game1Manager, Assembly-CSharp
-        m_MethodName: TogglePause
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

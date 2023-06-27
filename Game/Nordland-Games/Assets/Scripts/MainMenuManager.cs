@@ -1,24 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class MainMenuManager : MonoBehaviour
+namespace NLG
 {
-    private WebManager webmanager;
-    [SerializeField] private TMP_Text usernameText;
-    [SerializeField] private TMP_Text xpText;
-    
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// A Manager that controls the main menu
+    /// </summary>
+    public class MainMenuManager : MonoBehaviour
     {
-        webmanager = WebManager.instance;
-        usernameText.text = webmanager.UserNickname;
-        xpText.text = webmanager.UserXP + " XP";
-    }
+        private WebManager webmanager;
+        [SerializeField] private TMP_Text usernameText;
+        [SerializeField] private TMP_Text xpText;
+        [SerializeField] private GameObject characterTutorial;
 
-    public void DeleteSaveData()
-    {
-        PlayerPrefs.DeleteAll();
+        void Start()
+        {
+            webmanager = WebManager.instance;
+            usernameText.text = webmanager.UserNickname;
+            xpText.text = webmanager.UserXP + " XP";
+            characterTutorial.SetActive(PlayerPrefs.GetInt("CharacterTutorial", 0) == 0);
+        }
+
+        public void DeleteSaveData()
+        {
+            PlayerPrefs.DeleteAll();
+        }
+        
+        public void UseCharacterTutorial()
+        {
+            //Gets executed when clicking on the character creator the first time. Disables the simple Character Tutorial
+            characterTutorial.SetActive(false);
+            PlayerPrefs.SetInt("CharacterTutorial", 1);
+        }
     }
 }

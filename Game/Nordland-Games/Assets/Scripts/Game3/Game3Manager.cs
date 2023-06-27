@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 namespace NLG.Game3
 {
+    /// <summary>
+    /// The controlling manager for Game3.
+    /// </summary>
     public class Game3Manager : MonoBehaviour, IGameManager
     {
         [Header("GameState")]
@@ -169,6 +172,16 @@ namespace NLG.Game3
                 WebManager.instance.AddXP((int)score / 5);
                 WebManager.instance.AddHighscore(3, (int)score);
             }
+        }
+
+        public GameStates GetState()
+        {
+            return gameState;
+        }
+        
+        public float GetScore()
+        {
+            return score;
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace NLG
 {
+    /// <summary>
+    /// An object to hold the data of a character part.
+    /// </summary>
     [System.Serializable]
     public class CharacterPart
     {

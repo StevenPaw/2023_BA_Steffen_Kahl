@@ -3,6 +3,9 @@ using UnityEngine.EventSystems;
 
 namespace NLG.Game3
 {
+    /// <summary>
+    /// A script that adds force to a pump in Game3 when clicked.
+    /// </summary>
     public class PumpClickable : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] private Vector2 forceOnClick;

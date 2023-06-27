@@ -1,13 +1,13 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using NLG;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game2
+namespace NLG.Game2
 {
+    /// <summary>
+    /// The controlling manager for Game2.
+    /// </summary>
     public class Game2Manager : MonoBehaviour, IGameManager
     {
         [Header("GameState")]
@@ -37,12 +37,6 @@ namespace Game2
         [SerializeField] private int maxLives;
         
         private Rect window;
-
-        public GameStates GameState => gameState;
-
-        public int Score => score;
-
-        public int Lives => lives;
 
         private void Start()
         {
@@ -99,7 +93,6 @@ namespace Game2
             GameObject ghost = Instantiate(ghostPrefabs[UnityEngine.Random.Range(0, ghostPrefabs.Count)], newSpawnPosition, Quaternion.identity);
             ghost.transform.position = new Vector3(ghost.transform.position.x, ghost.transform.position.y, -50);
             lastSpawnPoint = ghost.transform.position;
-            ghost.GetComponent<Ghost>().Game2Manager = this;
         }
 
         public void TakeDamage()
@@ -126,7 +119,7 @@ namespace Game2
         public void ReceivePoint()
         {
             score++;
-            highscoreText.text = "Gefangene Seelen: " + score;
+            highscoreText.text = "Gefangene Geister: " + score;
         }
 
         public void PauseGame()
@@ -172,6 +165,16 @@ namespace Game2
             
             WebManager.instance.AddXP(score / 3);
             WebManager.instance.AddHighscore(2, score);
+        }
+        
+        public GameStates GetState()
+        {
+            return gameState;
+        }
+        
+        public float GetScore()
+        {
+            return score;
         }
     }
 }

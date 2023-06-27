@@ -1,12 +1,14 @@
-﻿using System;
-using NLG;
+﻿using System.Linq;
 using UnityEngine;
 
-namespace Game2
+namespace NLG.Game2
 {
+    /// <summary>
+    /// A script that holds all the needed data and behaviour for a ghost in Game2.
+    /// </summary>
     public class Ghost : MonoBehaviour
     {
-        [SerializeField] private Game2Manager game2Manager;
+        [SerializeField] private IGameManager gameManager;
         [SerializeField] private float escapeSpeed;
         [SerializeField] private AnimationCurve escapeSpeedCurve;
         [SerializeField] private float escapeProgress;
@@ -16,29 +18,29 @@ namespace Game2
         [SerializeField] private float maxSize;
         [SerializeField] private float minSize;
 
-        public Game2Manager Game2Manager
+        public IGameManager GameManager
         {
-            get => game2Manager;
-            set => game2Manager = value;
+            get => gameManager;
+            set => gameManager = value;
         }
 
         private void Start()
         {
             escapeProgress = 0;
             ghostAnimator.speed = 0;
-            game2Manager = FindObjectOfType<Game2Manager>();
+            gameManager = FindObjectsOfType<MonoBehaviour>().OfType<IGameManager>().FirstOrDefault();
             if(ghostAnimator != null) {
-                escapeTime = ghostAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.length / escapeSpeedCurve.Evaluate(game2Manager.Score);
+                escapeTime = ghostAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.length / escapeSpeedCurve.Evaluate(gameManager.GetScore());
             }
             transform.localScale = Vector2.one * UnityEngine.Random.Range(minSize, maxSize);
         }
 
         private void Update()
         {
-            if (game2Manager.GameState == GameStates.INGAME)
+            if (gameManager.GetState() == GameStates.INGAME)
             {
                 if (!captured) {
-                    ghostAnimator.speed = escapeSpeedCurve.Evaluate(game2Manager.Score);
+                    ghostAnimator.speed = escapeSpeedCurve.Evaluate(gameManager.GetScore());
                 }
                 else
                 {
@@ -51,7 +53,7 @@ namespace Game2
                 {
                     if (!captured)
                     {
-                        game2Manager.TakeDamage();
+                        gameManager.TakeDamage();
                     }
 
                     Destroy(gameObject);
@@ -66,7 +68,7 @@ namespace Game2
         private void OnMouseDown()
         {
             ghostAnimator.SetTrigger("Despawn");
-            game2Manager.ReceivePoint();
+            gameManager.ReceivePoint();
             escapeProgress = 0;
             ghostAnimator.speed = 1;
             captured = true;

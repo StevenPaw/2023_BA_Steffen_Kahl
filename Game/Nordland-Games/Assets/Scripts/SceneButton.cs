@@ -1,14 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneButton : MonoBehaviour
+namespace NLG
 {
-    [SerializeField] private string sceneToLoad;
-    
-    public void StartScene()
+    /// <summary>
+    /// A simple script that loads a scene with a specific name.
+    /// Used in many Menu buttons
+    /// </summary>
+    public class SceneButton : MonoBehaviour
     {
-        SceneManager.LoadScene(sceneToLoad);
+        [SerializeField] private string sceneToLoad;
+
+        public void StartScene()
+        {
+            SceneManager.LoadScene(sceneToLoad);
+        }
     }
 }

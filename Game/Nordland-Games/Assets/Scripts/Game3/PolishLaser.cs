@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace NLG.Game3
 {
+    /// <summary>
+    /// A script on the laser in Game3 that adds points to the player when they are hit.
+    /// </summary>
     public class PolishLaser : MonoBehaviour
     {
         private Game3Manager gameManager;
