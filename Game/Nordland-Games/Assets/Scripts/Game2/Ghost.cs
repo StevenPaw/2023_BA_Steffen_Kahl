@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace NLG.Game2
 {
@@ -11,6 +13,8 @@ namespace NLG.Game2
         [SerializeField] private IGameManager gameManager;
         [SerializeField] private float escapeSpeed;
         [SerializeField] private AnimationCurve escapeSpeedCurve;
+        [SerializeField] private AnimationCurve lightIntensityCurve;
+        [SerializeField] private Light2D light;
         [SerializeField] private float escapeProgress;
         [SerializeField] private float escapeTime;
         [SerializeField] private Animator ghostAnimator;
@@ -72,6 +76,7 @@ namespace NLG.Game2
             escapeProgress = 0;
             ghostAnimator.speed = 1;
             captured = true;
+            DOTween.To(()=> light.intensity, x=> light.intensity = x, 0, 0.1f);
         }
     }
 }

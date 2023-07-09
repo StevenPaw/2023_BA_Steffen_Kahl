@@ -9,17 +9,24 @@ namespace NLG
     /// </summary>
     public class CharacterPartSelector : MonoBehaviour
     {
-        [SerializeField] private Sprite image;
         [SerializeField] private CharacterPartTypes type;
         [SerializeField] private int partID;
         [SerializeField] private bool isSelected;
         [SerializeField] private Image spriteRenderer;
+        [SerializeField] private GameObject availabilityIndicator;
         [SerializeField] private GameObject selectedIndicator;
+        [SerializeField] private CharacterPart part;
+        [SerializeField] private bool isAvailable;
+        [SerializeField] private Color colorAvailable;
+        [SerializeField] private Color colorNotAvailable;
+        [SerializeField] private CharacterEditorManager characterEditorManager;
 
-        public Sprite Image
+        public bool IsAvailable => isAvailable;
+
+        public CharacterPart Part
         {
-            get => image;
-            set => image = value;
+            get => part;
+            set => part = value;
         }
 
         public CharacterPartTypes Type
@@ -47,8 +54,15 @@ namespace NLG
             {
                 Debug.LogError("CharacterRenderer not found!");
             }
-
-            spriteRenderer.sprite = image;
+            
+            try
+            {
+                characterEditorManager = FindObjectOfType<CharacterEditorManager>();
+            }
+            catch
+            {
+                Debug.LogError("CharacterEditorManager not found!");
+            }
         }
 
         // Update is called once per frame
@@ -92,9 +106,26 @@ namespace NLG
             selectedIndicator.SetActive(isSelected);
         }
 
+        public void ChangePart(CharacterPart part)
+        {
+            this.part = part;
+            Type = part.Type;
+            PartID = part.PartID;
+            spriteRenderer.sprite = part.Image;
+            isAvailable = WebManager.instance.UserXP >= part.RequiredXp; //Check if user has enough XP to use part
+            spriteRenderer.color = isAvailable ? colorAvailable : colorNotAvailable; //Change renderer color accordingly
+            availabilityIndicator.SetActive(!isAvailable);
+        }
+
         public void SelectPart()
         {
-            characterRenderer.ChangeSelectedCharacterPart(type, partID);
+            if (isAvailable)
+            {
+                characterRenderer.ChangeSelectedCharacterPart(type, partID);
+            } else
+            {
+                characterEditorManager.ShowXPMessage(part);
+            }
         }
     }
 }

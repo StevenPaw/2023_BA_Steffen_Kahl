@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace NLG
@@ -14,6 +15,9 @@ namespace NLG
         [SerializeField] private GameObject selectorEntryPrefab;
         [SerializeField] private GameObject selectorEntryContainer;
         [SerializeField] private GameObject[] categoryButtons;
+        
+        [SerializeField] private GameObject xpMessageContainer;
+        [SerializeField] private TMP_Text xpMessageText;
 
         public CharacterPartTypes ActivePartType => activePartType;
 
@@ -40,9 +44,7 @@ namespace NLG
                     GameObject newObject = Instantiate(selectorEntryPrefab.transform, selectorEntryContainer.transform)
                         .gameObject;
                     CharacterPartSelector newSelector = newObject.GetComponent<CharacterPartSelector>();
-                    newSelector.Type = part.Type;
-                    newSelector.PartID = part.PartID;
-                    newSelector.Image = part.Image;
+                    newSelector.ChangePart(part);
                 }
             }
         }
@@ -63,11 +65,15 @@ namespace NLG
                     GameObject newObject = Instantiate(selectorEntryPrefab.transform, selectorEntryContainer.transform)
                         .gameObject;
                     CharacterPartSelector newSelector = newObject.GetComponent<CharacterPartSelector>();
-                    newSelector.Type = part.Type;
-                    newSelector.PartID = part.PartID;
-                    newSelector.Image = part.Image;
+                    newSelector.ChangePart(part);
                 }
             }
+        }
+
+        public void ShowXPMessage(CharacterPart part)
+        {
+            xpMessageContainer.SetActive(true);
+            xpMessageText.text = "Du brauchst noch " + (part.RequiredXp - WebManager.instance.UserXP) + " XP um dieses Teil freizuschalten!";
         }
     }
 }
