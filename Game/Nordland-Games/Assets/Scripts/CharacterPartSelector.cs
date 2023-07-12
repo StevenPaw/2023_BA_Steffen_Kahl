@@ -1,5 +1,8 @@
+using System.Drawing;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
+using Color = UnityEngine.Color;
 
 namespace NLG
 {
@@ -54,7 +57,7 @@ namespace NLG
             {
                 Debug.LogError("CharacterRenderer not found!");
             }
-            
+
             try
             {
                 characterEditorManager = FindObjectOfType<CharacterEditorManager>();
@@ -122,7 +125,8 @@ namespace NLG
             if (isAvailable)
             {
                 characterRenderer.ChangeSelectedCharacterPart(type, partID);
-            } else
+            }
+            else
             {
                 characterEditorManager.ShowXPMessage(part);
             }

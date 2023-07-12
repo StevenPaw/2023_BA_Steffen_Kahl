@@ -119,7 +119,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &561539638979693007
 CanvasRenderer:
@@ -186,6 +186,7 @@ MonoBehaviour:
   isAvailable: 0
   colorAvailable: {r: 1, g: 1, b: 1, a: 1}
   colorNotAvailable: {r: 0, g: 0, b: 0, a: 1}
+  characterEditorManager: {fileID: 0}
 --- !u!114 &8299934277894989367
 MonoBehaviour:
   m_ObjectHideFlags: 0
