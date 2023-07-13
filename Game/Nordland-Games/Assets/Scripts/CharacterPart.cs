@@ -9,6 +9,7 @@ namespace NLG
     public class CharacterPart
     {
         [SerializeField] private Sprite image;
+        [SerializeField] private Sprite previewImage;
         [SerializeField] private string title;
         [SerializeField] private int requiredXP;
         [SerializeField] private int partID;
@@ -18,6 +19,12 @@ namespace NLG
         {
             get => image;
             set => image = value;
+        }
+
+        public Sprite PreviewImage
+        {
+            get => previewImage;
+            set => previewImage = value;
         }
 
         public string Title

@@ -229,6 +229,29 @@ namespace NLG
                         newPart.Image = spr;
                     }
 
+                    if (part["PreviewImage"] != null)
+                    {
+                        //Get PreviewImage for Characterpart
+                        UnityWebRequest request2 = UnityWebRequestTexture.GetTexture(part["PreviewImage"]);
+                        yield return request2.SendWebRequest();
+                        if (request2.isNetworkError || request2.isHttpError)
+                        {
+                            Debug.Log(request.error);
+                        }
+                        else
+                        {
+                            Texture2D tex2 = ((DownloadHandlerTexture) request2.downloadHandler).texture;
+                            tex2.filterMode = FilterMode.Point;
+                            Sprite spr2 = Sprite.Create(tex2, new Rect(0, 0, tex2.width, tex2.height),
+                                new Vector2(tex2.width / 2, tex2.height / 2));
+                            newPart.PreviewImage = spr2;
+                        }
+                    }
+                    else
+                    {
+                        newPart.PreviewImage = newPart.Image;
+                    }
+
                     newPart.Title = part["Title"];
                     newPart.RequiredXp = part["RequiredXP"];
                     newPart.PartID = part["ID"];

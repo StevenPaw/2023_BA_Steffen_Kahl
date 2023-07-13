@@ -114,7 +114,7 @@ namespace NLG
             this.part = part;
             Type = part.Type;
             PartID = part.PartID;
-            spriteRenderer.sprite = part.Image;
+            spriteRenderer.sprite = part.PreviewImage;
             isAvailable = WebManager.instance.UserXP >= part.RequiredXp; //Check if user has enough XP to use part
             spriteRenderer.color = isAvailable ? colorAvailable : colorNotAvailable; //Change renderer color accordingly
             availabilityIndicator.SetActive(!isAvailable);
