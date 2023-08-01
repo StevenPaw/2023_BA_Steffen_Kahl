@@ -49,6 +49,7 @@ namespace NLG.Game2
             window.xMin += 50;
             highscoreText.text = "Highscore: " + PlayerPrefs.GetInt("Highscore_Game2", 0);
             liveIcon1.gameObject.SetActive(true);
+            gameState = GameStates.TUTORIAL;
         }
         
         public void StartGame()

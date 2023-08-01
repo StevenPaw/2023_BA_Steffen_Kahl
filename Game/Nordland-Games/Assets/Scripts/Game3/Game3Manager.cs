@@ -57,6 +57,7 @@ namespace NLG.Game3
             mainCamera = Camera.main;
             highscoreText.text = "Highscore: " + PlayerPrefs.GetInt("Highscore_Game3", 0);
             characterXPInfo.SetActive(false);
+            gameState = GameStates.TUTORIAL;
         }
 
         private void Update()

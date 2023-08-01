@@ -53,6 +53,7 @@ namespace NLG.Game1
             playerBowl.gameObject.SetActive(false);
             highscoreText.text = "Highscore: " + PlayerPrefs.GetInt("Highscore_Game1", 0);
             characterXPInfo.SetActive(false);
+            gameState = GameStates.TUTORIAL;
         }
 
         private void Update()

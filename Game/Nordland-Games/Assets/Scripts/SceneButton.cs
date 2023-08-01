@@ -14,6 +14,7 @@ namespace NLG
         public void StartScene()
         {
             SceneManager.LoadScene(sceneToLoad);
+            Time.timeScale = 1;
         }
     }
 }
